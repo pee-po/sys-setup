@@ -143,7 +143,8 @@ sudo -u $SUDO_USER \
 alias config='/usr/bin/git --git-dir=$UHOME/.cfg/ --work-tree=$UHOME'
 mkdir -p $UHOME/.config-backup && \
 	sudo -u $SUDO_USER config checkout 2>&1 | egrep "\s+\." | \
-    awk {'print $1'} | \ xargs -I{} mv {} $UHOME.config-backup/{}
+    awk {'print $1'} | \
+    sudo -u $SUDO_USER xargs -I{} mv {} $UHOME/.config-backup/{}
 chown -R $SUDO_USER:$SUDO_USER $UHOME/.config-backup
 sudo -u $SUDO_USER /usr/bin/git --git-dir=$UHOME/.cfg/ \
     --work-tree=$UHOME checkout
