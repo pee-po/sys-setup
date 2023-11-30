@@ -137,7 +137,6 @@ cd $DPWD
 # Since this is ment to be run as root, it needs some
 # workarounds for user and home dir.
 UHOME=/home/$SUDO_USER
-echo ".cfg" >> .gitignore
 sudo -u $SUDO_USER \
     git clone --bare https://github.com/pee-po/dotfiles.git $UHOME/.cfg
 alias config='/usr/bin/git --git-dir=$UHOME/.cfg/ --work-tree=$UHOME'
