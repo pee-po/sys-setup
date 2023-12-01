@@ -167,6 +167,15 @@ https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
 echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
     | tee /etc/apt/sources.list.d/vscodium.list
 
+# Wine
+mkdir -pm755 /etc/apt/keyrings
+wget -O \
+    /etc/apt/keyrings/winehq-archive.key \
+    https://dl.winehq.org/wine-builds/winehq.key
+wget -NP \
+    /etc/apt/sources.list.d/ \
+    https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+
 apt update
 apt install -y \
     r-base \
@@ -177,7 +186,10 @@ apt install -y \
     gimp \
     p7zip \
     qbittorrent \
-    codium
+    codium \
+    mono-complete
+
+apt install --install-recommends winehq-stable
 
 flatpak flathub install -y org.ferdium.Ferdium
 flatpak flathub install -y com.discordapp.Discord
