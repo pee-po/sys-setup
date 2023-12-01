@@ -105,7 +105,8 @@ apt install -y \
     npm \
     openjdk-19-jdk \
     python3-pip \
-    xclip
+    xclip \
+    vim
 
 # Setup python and npm for neovim
 pip3 install neovim
