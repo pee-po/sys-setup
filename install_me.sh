@@ -109,7 +109,7 @@ apt install -y \
     vim
 
 # Setup python and npm for neovim
-pip3 install neovim
+sudo -u $SUDO_USER pip3 install neovim
 npm install -g neovim
 
 UHOME=/home/$SUDO_USER
@@ -205,11 +205,11 @@ apt install -y \
 
 apt install --install-recommends winehq-stable
 
-flatpak flathub install -y org.ferdium.Ferdium
-flatpak flathub install -y com.discordapp.Discord
+flatpak install flathub -y org.ferdium.Ferdium
+flatpak install flathub -y com.discordapp.Discord
 
-sudo -u $SUDO_USER sh \
-    <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
+curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh | \
+    sudo -u $SUDO_USER sh
 
 # Miniforge - conda, mamba
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" -O $TMP_DIR/Miniforge.sh
