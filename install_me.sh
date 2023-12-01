@@ -55,6 +55,15 @@
 # * Install ProtonGE https://github.com/GloriousEggroll/proton-ge-custom
 # * Install Wine
 # * Install Steam, Lutris
+# * Darkmode :)
+# * Make sure keyboard layout is set right
+# * Install NVidia drivers and top it up with mesa-vulkan-drivers:i386
+
+# Running
+# ==============================================================
+# wget -O - \
+# https://raw.githubusercontent.com/pee-po/sys-setup/master/install_me.sh \
+# sudo bash
 
 # Parameters
 # ==============================================================
@@ -74,6 +83,10 @@ codium_extensions=(
 # * Add ProtonGE installation script
 # * Add check for root user
 # * Add prompt reminding what to do after
+# * Prepare games folders, set ownership and privacy
+#   - ~/.steam -> /usr/local/.steam-$user
+#   - ~/Steam -> /user/local/Steam-$user
+#   - /usr/local/games/$user
 
 # Basics
 # ==============================================================
@@ -92,12 +105,14 @@ apt install -y \
     npm \
     openjdk-19-jdk \
     python3-pip \
-    xclip
+    xclip \
+    vim
 
 # Setup python and npm for neovim
 pip3 install neovim
 npm install -g neovim
 
+UHOME=/home/$SUDO_USER
 DPWD=$(pwd)
 TMP_DIR=/tmp/install_tmp
 mkdir -p $TMP_DIR
@@ -136,7 +151,6 @@ cd $DPWD
 # ==============================================================
 # Since this is ment to be run as root, it needs some
 # workarounds for user and home dir.
-UHOME=/home/$SUDO_USER
 sudo -u $SUDO_USER \
     git clone --bare https://github.com/pee-po/dotfiles.git $UHOME/.cfg
 alias config='/usr/bin/git --git-dir=$UHOME/.cfg/ --work-tree=$UHOME'
@@ -167,6 +181,15 @@ https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
 echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
     | tee /etc/apt/sources.list.d/vscodium.list
 
+# Wine
+mkdir -pm755 /etc/apt/keyrings
+wget -O \
+    /etc/apt/keyrings/winehq-archive.key \
+    https://dl.winehq.org/wine-builds/winehq.key
+wget -NP \
+    /etc/apt/sources.list.d/ \
+    https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+
 apt update
 apt install -y \
     r-base \
@@ -177,7 +200,10 @@ apt install -y \
     gimp \
     p7zip \
     qbittorrent \
-    codium
+    codium \
+    mono-complete
+
+apt install --install-recommends winehq-stable
 
 flatpak flathub install -y org.ferdium.Ferdium
 flatpak flathub install -y com.discordapp.Discord
@@ -208,4 +234,29 @@ done
 
 apt update
 apt upgrade
+
+# Setup keyfile for disk encrytion based on nixCraft's article (see README)
+KEYFILE=/etc/backup_keyfile
+dd bs=512 count=4 if=/dev/random of=$KEYFILE iflag=fullblock
+openssl genrsa -out $KEYFILE 4096
+chmod -v 0400 $KEYFILE
+chown root:root $KEYFILE
+
+# Setup game folders
+DIR_NAMES=(
+    .steam
+    Steam
+)
+for i in "${DIR_NAMES[@]}"; do
+    DNAME=$i-$SUDO_USER
+    mkdir /usr/local/$DNAME
+    chmod 750 /usr/local/$DNAME
+    chown $SUDO_USER:$SUDO_USER /usr/local/$DNAME
+    ln -s /usr/local/$DNAME $UHOME/$i
+    chown $SUDO_USER:$SUDO_USER $UHOME/$i
+done
+
+mkdir /usr/local/Games-$SUDO_USER
+chmod 750 /usr/local/Games-$SUDO_USER
+chown $SUDO_USER:$SUDO_USER /usr/local/Games-$SUDO_USER
 
