@@ -241,3 +241,21 @@ openssl genrsa -out $KEYFILE 4096
 chmod -v 0400 $KEYFILE
 chown root:root $KEYFILE
 
+# Setup game folders
+DIR_NAMES=(
+    .steam
+    Steam
+)
+for i in "${DIR_NAMES[@]}"; do
+    DNAME=$i-$SUDO_USER
+    mkdir /usr/local/$DNAME
+    chmod 750 /usr/local/$DNAME
+    chown $SUDO_USER:$SUDO_USER /usr/local/$DNAME
+    ln -s /usr/local/$DNAME $UHOME/$i
+    chown $SUDO_USER:$SUDO_USER $UHOME/$i
+done
+
+mkdir /usr/local/Games-$SUDO_USER
+chmod 750 /usr/local/Games-$SUDO_USER
+chown $SUDO_USER:$SUDO_USER /usr/local/Games-$SUDO_USER
+
