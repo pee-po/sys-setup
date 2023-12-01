@@ -111,6 +111,7 @@ apt install -y \
 pip3 install neovim
 npm install -g neovim
 
+UHOME=/home/$SUDO_USER
 DPWD=$(pwd)
 TMP_DIR=/tmp/install_tmp
 mkdir -p $TMP_DIR
@@ -149,7 +150,6 @@ cd $DPWD
 # ==============================================================
 # Since this is ment to be run as root, it needs some
 # workarounds for user and home dir.
-UHOME=/home/$SUDO_USER
 sudo -u $SUDO_USER \
     git clone --bare https://github.com/pee-po/dotfiles.git $UHOME/.cfg
 alias config='/usr/bin/git --git-dir=$UHOME/.cfg/ --work-tree=$UHOME'
@@ -233,4 +233,11 @@ done
 
 apt update
 apt upgrade
+
+# Setup keyfile for disk encrytion based on nixCraft's article (see README)
+KEYFILE=/etc/backup_keyfile
+dd bs=512 count=4 if=/dev/random of=$KEYFILE iflag=fullblock
+openssl genrsa -out $KEYFILE 4096
+chmod -v 0400 $KEYFILE
+chown root:root $KEYFILE
 
