@@ -55,6 +55,15 @@
 # * Install ProtonGE https://github.com/GloriousEggroll/proton-ge-custom
 # * Install Wine
 # * Install Steam, Lutris
+# * Darkmode :)
+# * Make sure keyboard layout is set right
+# * Install NVidia drivers and top it up with mesa-vulkan-drivers:i386
+
+# Running
+# ==============================================================
+# wget -O - \
+# https://raw.githubusercontent.com/pee-po/sys-setup/master/install_me.sh \
+# sudo bash
 
 # Parameters
 # ==============================================================
@@ -74,6 +83,10 @@ codium_extensions=(
 # * Add ProtonGE installation script
 # * Add check for root user
 # * Add prompt reminding what to do after
+# * Prepare games folders, set ownership and privacy
+#   - ~/.steam -> /usr/local/.steam-$user
+#   - ~/Steam -> /user/local/Steam-$user
+#   - /usr/local/games/$user
 
 # Basics
 # ==============================================================
