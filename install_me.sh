@@ -190,6 +190,18 @@ wget -NP \
     /etc/apt/sources.list.d/ \
     https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
 
+#NordVPN
+NVPN_BASE_URL=https://repo.nordvpn.com
+NVPN_KEY_PATH=/gpg/nordvpn_public.asc
+NVPN_REPO_PATH_DEB=/deb/nordvpn/debian
+NVPN_RELEASE="stable main"
+NVPN_PUB_KEY=${NVPN_BASE_URL}${NVPN_KEY_PATH}
+NVPN_REPO_URL_DEB=${NVPN_BASE_URL}${NVPN_REPO_PATH_DEB}
+
+wget -qO - "${NVPN_PUB_KEY}" | \
+    tee /etc/apt/trusted.gpg.d/nordvpn_public.asc > /dev/null
+echo "deb ${NVPN_REPO_URL_DEB} ${NVPN_RELEASE}" | tee /etc/apt/sources.list.d/nordvpn.list
+
 apt update
 apt install -y \
     r-base \
@@ -201,15 +213,13 @@ apt install -y \
     p7zip \
     qbittorrent \
     codium \
-    mono-complete
+    mono-complete \
+    nordvpn
 
 apt install --install-recommends winehq-stable
 
 flatpak install flathub -y org.ferdium.Ferdium
 flatpak install flathub -y com.discordapp.Discord
-
-curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh | \
-    sudo -u $SUDO_USER sh
 
 # Miniforge - conda, mamba
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" -O $TMP_DIR/Miniforge.sh
