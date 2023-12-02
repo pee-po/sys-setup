@@ -8,6 +8,16 @@ no guarantee that it will work or even suit YOU. Now that you've been
 warned - use it, take inspiration and let mee know if you have any
 feedback.
 
+## Before installation
+
+## Installation
+
+```bash
+wget -q -O - \
+https://raw.githubusercontent.com/pee-po/sys-setup/master/install_me.sh \
+sudo bash
+```
+
 ## After installation
 
 ### Review notes
