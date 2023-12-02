@@ -53,7 +53,6 @@
 # * Login to vpn
 # * Install RStudio from .deb
 # * Install ProtonGE https://github.com/GloriousEggroll/proton-ge-custom
-# * Install Wine
 # * Install Steam, Lutris
 # * Darkmode :)
 # * Make sure keyboard layout is set right
@@ -61,7 +60,7 @@
 
 # Running
 # ==============================================================
-# wget -O - \
+# wget -q -O - \
 # https://raw.githubusercontent.com/pee-po/sys-setup/master/install_me.sh \
 # sudo bash
 
@@ -87,6 +86,7 @@ codium_extensions=(
 #   - ~/.steam -> /usr/local/.steam-$user
 #   - ~/Steam -> /user/local/Steam-$user
 #   - /usr/local/games/$user
+# * Fix flathub installs
 
 # Basics
 # ==============================================================
@@ -218,8 +218,9 @@ apt install -y \
 
 apt install --install-recommends winehq-stable
 
-flatpak install flathub -y org.ferdium.Ferdium
-flatpak install flathub -y com.discordapp.Discord
+# Something's fucky
+# flatpak install flathub -y org.ferdium.Ferdium
+# flatpak install flathub -y com.discordapp.Discord
 
 # Miniforge - conda, mamba
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" -O $TMP_DIR/Miniforge.sh
