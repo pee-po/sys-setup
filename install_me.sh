@@ -125,6 +125,7 @@ fc-cache -fv
 # ==============================================================
 
 # Neovim
+# System version is to old, needs building from source
 mkdir -p $TMP_DIR/neovim
 git clone https://github.com/neovim/neovim.git $TMP_DIR/neovim
 make CMAKE_BUILD_TYPE=Release -C $TMP_DIR/neovim
@@ -198,6 +199,7 @@ wget -qO - "${NVPN_PUB_KEY}" | \
     tee /etc/apt/trusted.gpg.d/nordvpn_public.asc > /dev/null
 echo "deb ${NVPN_REPO_URL_DEB} ${NVPN_RELEASE}" | tee /etc/apt/sources.list.d/nordvpn.list
 
+# Install packages from repos
 apt update
 apt install -y \
     r-base \
@@ -218,6 +220,8 @@ apt install --install-recommends winehq-stable
 # flatpak install flathub -y org.ferdium.Ferdium
 # flatpak install flathub -y com.discordapp.Discord
 
+
+# Install packages from web
 # Miniforge - conda, mamba
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh" -O $TMP_DIR/Miniforge.sh
 bash $TMP_DIR/Miniforge.sh -b -p /usr/local/miniforge3
@@ -240,7 +244,7 @@ for i in "${codium_extensions[@]}"; do
 done
 
 apt update
-apt upgrade
+apt upgrade -y
 
 # Setup keyfile for disk encrytion based on nixCraft's article (see README)
 KEYFILE=/etc/backup_keyfile
