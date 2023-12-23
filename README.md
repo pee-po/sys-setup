@@ -33,8 +33,6 @@ generally do this with other stuff - additional drives or even parts of
 [FHS](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
 but beware of what dirs have to be mounted at what point. I wanted
 to mount `/usr` from another SDD - turns out [it's an issue](https://wiki.freedesktop.org/www/Software/systemd/separate-usr-is-broken/).
-So I mount `/usr/local` and that's where I store "heavy" stuff like games.
-In hindsight - maybe `/opt` is a better place for that.
 
 ```bash
 KEYFILE=/etc/backup_keyfile
