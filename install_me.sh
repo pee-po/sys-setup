@@ -70,6 +70,8 @@
 codium_extensions=(
     ms-python.isort
     ms-python.python
+    ms-python.flake8
+    ms-python.mypy-type-checker
     ms-vscode.cmake-tools
     ms-vscode.cpptools-themes
     ms-vscode.hexeditor
